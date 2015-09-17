@@ -1,0 +1,30 @@
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}All Bookmarks{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Editable bookmark</h1>
+</div>
+<br>
+<h3>Edit Bookmark</h3>
+<div>
+<form action="{{ url_for('edit_bookmark', uri = editable_bookmark['uri']) }}" method="post">
+ <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+<table>
+
+	<tr> 
+		<td> {{ form.bookmark_url(placeholder = editable_bookmark['bookmark_url']) }} </td>
+		<td> {{ form.form_submit }} </td>
+		<td>
+			
+			
+		</td>
+	</tr>
+
+</table>
+</form>
+</div>
+{% endblock %}
