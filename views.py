@@ -30,9 +30,9 @@ def all_bookmarks():
 	for k,v in bookmarks.items():
 		sub_list = v
 	return sub_list
-		
-	
-	
+
+
+
 def one_bookmark(uri):
 	resp = requests.get(uri)
 	if resp.status_code != 200:
@@ -42,8 +42,8 @@ def one_bookmark(uri):
 	for k,v in bookmarks.items():
 		sub_list = v
 	return sub_list
-	
-		
+
+
 # All bookmarks
 @app.route('/api/v1/bookmarks/all', methods=['GET'])
 def bookmarks():
@@ -52,8 +52,8 @@ def bookmarks():
 	form=AddBookMark(request.form),
 	all_bookmarks=all_bookmarks()
     )
-	
-	
+
+
 # add a bookmark
 @app.route('/api/bookmarks', methods=['GET','POST'])
 def add_bookmark():
@@ -67,9 +67,9 @@ def add_bookmark():
 				abort(404, message="Bookmark not added {}".format(resp.status_code))
 			flash('New bookmark saved.')
 			return render_template('bookmarks.html', form=form, all_bookmarks=all_bookmarks())
-	return render_template('entry_bookmarks.html', form=form) 
-	
-	
+	return render_template('entry_bookmarks.html', form=form)
+
+
 # edit
 @app.route('/api/v1/bookmark/edit/<path:uri>', methods=['GET','POST'])
 def edit_bookmark(uri):
@@ -87,19 +87,16 @@ def edit_bookmark(uri):
 			flash('BookMark Update is successful')
 			return render_template('bookmarks.html', all_bookmarks=all_bookmarks())
 	return render_template('edit_bookmarks.html', form=form,  editable_bookmark=editable_bookmark)
-	
+
 
 
 # delete
 @app.route('/api/v1/bookmark/delete/<path:uri>',methods=['GET'])
 def delete_bookmark(uri):
-   	resp = requests.delete(uri)
+	resp = requests.delete(uri)
 	bookmarks = resp.json()
 	for k,v in bookmarks.items():
 		sub_list = v
 	if sub_list and resp.status_code == 200:
 		flash('The BookMark was successfully deleted.')
 		return render_template('bookmarks.html', all_bookmarks=all_bookmarks())
-	
-	
-	
